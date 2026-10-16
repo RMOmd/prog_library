@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript. Подробное руководство (7-е издание) — Дэвид Флэнаган</title>
+<meta name="description" content="Интерактивная книга: JavaScript. Подробное руководство (JavaScript: The Definitive Guide) — авторитетная библия веб-разработки">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318181b'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='40' fill='%23facc15'%3E🦏%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #0f141c;
+  --chalk: #fef08a;
+  --top-bg: rgba(15, 20, 28, .92);
+  --top-line: #27272a;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(24, 24, 27, 0.85);
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  border-radius: 9999px;
+  color: #facc15;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(250, 204, 21, 0.15);
+  border-color: #facc15;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 196px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">const { a, b, ...rest } = obj;</span>
+    <span style="right:8%;top:17%;--d:1.9">async function* stream()</span>
+    <span style="left:5%;bottom:20%;--d:2.2">document.querySelector('main')</span>
+    <span style="right:6%;bottom:15%;--d:2.5">Promise.allSettled(tasks)</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка книги" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка JavaScript</p>
+  <h1>JavaScript <i>&amp;</i> Подробное руководство</h1>
+  <p class="lede">«Книга с носорогом» — легендарная библия языка JavaScript от Дэвида Флэнагана (7-е издание). От фундаментального синтаксиса до асинхронности, DOM и Node.js.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>JavaScript (Флэнаган)</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'javascript-definitive-guide',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Основы языка JavaScript (Core JS)', [
+      ['Введение в JavaScript', 8],
+      ['Лексическая структура', 7],
+      ['Типы, значения и переменные', 12],
+      ['Выражения и операции', 11],
+      ['Инструкции и операторы', 10],
+      ['Объекты', 14],
+      ['Массивы', 13],
+      ['Функции', 15],
+      ['Классы', 14],
+      ['Модули', 10]
+    ]],
+    ['Часть II. Стандартная библиотека и продвинутые возможности', [
+      ['Стандартная библиотека JavaScript', 14],
+      ['Итераторы и генераторы', 12],
+      ['Асинхронный JavaScript', 16],
+      ['Метапрограммирование', 13]
+    ]],
+    ['Часть III. Веб-платформа, Node.js и Инструменты', [
+      ['JavaScript в веб-браузерах', 18],
+      ['Серверный JavaScript на платформе Node', 15],
+      ['Инструменты и расширения JavaScript', 12]
+    ]]
+  ],
+  hues: ['#facc15', '#38bdf8', '#10b981']
+});
+</script>
+</body>
+</html>

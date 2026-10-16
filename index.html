@@ -1,0 +1,1744 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Библиотека интерактивных книг — DevBooks Interactive</title>
+<meta name="description" content="Интерактивная библиотека книг по программированию: живые конспекты, код и проверочные квизы по главам, разделенные по языкам программирования.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='40' fill='%2338bdf8'%3E📚%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==================== DESIGN TOKENS & RESET ==================== */
+:root {
+  --bg-page: #080c14;
+  --bg-surface: #0f172a;
+  --bg-card: rgba(17, 26, 46, 0.78);
+  --bg-card-hover: rgba(23, 35, 63, 0.92);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --border-card-hover: rgba(56, 189, 248, 0.35);
+
+  --accent-blue: #38bdf8;
+  --accent-emerald: #10b981;
+  --accent-amber: #facc15;
+  --accent-purple: #a855f7;
+  --accent-indigo: #6366f1;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, monospace;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.55);
+  --shadow-glow-blue: 0 0 30px rgba(56, 189, 248, 0.2);
+  --shadow-glow-green: 0 0 30px rgba(16, 185, 129, 0.2);
+  --shadow-glow-amber: 0 0 30px rgba(250, 204, 21, 0.2);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  color-scheme: dark;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(56, 189, 248, 0.09) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 25%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.07) 0%, transparent 50%),
+    linear-gradient(to bottom, #080c14, #0b111e);
+  background-attachment: fixed;
+}
+
+/* Background Subtle Grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ==================== HEADER ==================== */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px 0 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.3));
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #ffffff 40%, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-title span {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  -webkit-text-fill-color: initial;
+}
+
+.brand-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Quick Search */
+.search-wrapper {
+  position: relative;
+  width: 320px;
+}
+
+.search-wrapper svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-dim);
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 42px 10px 40px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.search-input:focus + svg {
+  color: var(--accent-blue);
+}
+
+.search-shortcut-hint {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-dim);
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* ==================== HERO STATS BAR ==================== */
+.hero-banner {
+  padding: 36px 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-text h2 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.hero-text p {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 680px;
+}
+
+.global-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-chip strong {
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.stat-chip.py strong { color: var(--accent-blue); }
+.stat-chip.green strong { color: var(--accent-emerald); }
+.stat-chip.amber strong { color: var(--accent-amber); }
+
+/* ==================== SHELF FILTER PILLS ==================== */
+.filter-shelf-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0 32px;
+  overflow-x: auto;
+}
+
+.shelf-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.shelf-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.shelf-pill-btn.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.25));
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
+}
+
+.shelf-pill-btn .pill-counter {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-muted);
+}
+
+.shelf-pill-btn.active .pill-counter {
+  background: rgba(56, 189, 248, 0.3);
+  color: #ffffff;
+}
+
+/* ==================== SHELVES & BOOK CARDS ==================== */
+.shelves-container {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.shelf-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.shelf-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.shelf-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shelf-lang-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.shelf-lang-icon.py { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); }
+.shelf-lang-icon.cpp { background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); }
+.shelf-lang-icon.future { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); }
+
+.shelf-heading-row h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.shelf-heading-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* Book Grid */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 880px) {
+  .books-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual Book Card */
+.book-tech-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.book-tech-card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+  border-color: var(--card-accent-border, var(--border-card-hover));
+  box-shadow: var(--card-glow, var(--shadow-md));
+}
+
+.book-tech-card.card-py-tdd {
+  --card-accent-border: rgba(56, 189, 248, 0.45);
+  --card-glow: var(--shadow-glow-blue);
+}
+
+.book-tech-card.card-clean-code {
+  --card-accent-border: rgba(16, 185, 129, 0.45);
+  --card-glow: var(--shadow-glow-green);
+}
+
+.book-tech-card.card-cpp {
+  --card-accent-border: rgba(250, 204, 21, 0.45);
+  --card-glow: var(--shadow-glow-amber);
+}
+
+.book-tech-card.card-js-guide {
+  --card-accent-border: rgba(250, 204, 21, 0.45);
+  --card-glow: var(--shadow-glow-amber);
+}
+
+.shelf-lang-icon.js { background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.35); }
+.lang-badge.js { background: rgba(250, 204, 21, 0.15); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); }
+
+.card-js-guide .btn-primary-action {
+  background: #facc15;
+  color: #18181b;
+  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
+}
+.card-js-guide .btn-primary-action:hover {
+  background: #fde047;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.45);
+}
+.card-js-guide .progress-fill { background: linear-gradient(90deg, #facc15, #f59e0b); }
+
+/* Card Top Section: Cover & Info */
+.card-top {
+  display: flex;
+  gap: 20px;
+}
+
+.card-cover-link {
+  flex-shrink: 0;
+  position: relative;
+  display: block;
+  width: 110px;
+  height: 154px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.2s ease;
+}
+
+.book-tech-card:hover .card-cover-link {
+  transform: scale(1.03);
+}
+
+.card-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lang-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.lang-badge.py { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.3); }
+.lang-badge.clean { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+.lang-badge.cpp { background: rgba(250, 204, 21, 0.15); color: var(--accent-amber); border: 1px solid rgba(250, 204, 21, 0.3); }
+.lang-badge.js { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+.meta-edition {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.book-card-title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.book-card-title a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.book-card-title a:hover {
+  color: var(--accent-blue);
+}
+
+.book-card-author {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.book-card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Topic Tags */
+.topics-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.topic-tag {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ==================== PROGRESS SECTION ==================== */
+.card-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.progress-percent {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.card-py-tdd .progress-fill { background: linear-gradient(90deg, #38bdf8, #60a5fa); }
+.card-clean-code .progress-fill { background: linear-gradient(90deg, #10b981, #34d399); }
+.card-cpp .progress-fill { background: linear-gradient(90deg, #facc15, #fbbf24); }
+
+/* ==================== DIRECT ACTION BUTTONS ==================== */
+.card-actions-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-primary-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.card-py-tdd .btn-primary-action {
+  background: #38bdf8;
+  color: #04121d;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+}
+.card-py-tdd .btn-primary-action:hover {
+  background: #7dd3fc;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45);
+}
+
+.card-clean-code .btn-primary-action {
+  background: #10b981;
+  color: #022013;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+.card-clean-code .btn-primary-action:hover {
+  background: #34d399;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.card-cpp .btn-primary-action {
+  background: #facc15;
+  color: #231900;
+  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
+}
+.card-cpp .btn-primary-action:hover {
+  background: #fde047;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.45);
+}
+
+.card-ydkjs .btn-primary-action, .card-js-guide .btn-primary-action {
+  background: #f59e0b;
+  color: #1c1100;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+.card-ydkjs .btn-primary-action:hover, .card-js-guide .btn-primary-action:hover {
+  background: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+}
+
+.card-js-nulya .btn-primary-action {
+  background: #10b981;
+  color: #022013;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+.card-js-nulya .btn-primary-action:hover {
+  background: #34d399;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.btn-secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-secondary-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ==================== QUICK CHAPTER JUMP ACCORDION ==================== */
+.quick-chapters-drawer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.drawer-toggle-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+
+.drawer-toggle-btn:hover {
+  color: var(--text-main);
+}
+
+.drawer-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.drawer-toggle-btn.open svg {
+  transform: rotate(180deg);
+}
+
+.chapter-pills-grid {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.chapter-pills-grid.open {
+  display: grid;
+}
+
+/* Custom scrollbar for chapter pills */
+.chapter-pills-grid::-webkit-scrollbar {
+  width: 4px;
+}
+.chapter-pills-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+.chapter-pills-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.ch-pill-jump {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.ch-pill-jump:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.ch-pill-jump.done {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+/* ==================== UPCOMING BOOKS (SHELF 3) ==================== */
+.upcoming-card {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  opacity: 0.85;
+}
+
+.upcoming-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent-purple);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  align-self: flex-start;
+}
+
+.upcoming-card h4 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.upcoming-card p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ==================== FOOTER ==================== */
+.library-footer {
+  margin-top: 80px;
+  padding: 36px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-pill-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-pill-link:hover {
+  color: var(--accent-blue);
+}
+
+/* No Search Results */
+.no-results-state {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-card);
+  margin-top: 20px;
+}
+.no-results-state.visible {
+  display: block;
+}
+.no-results-state h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.no-results-state p {
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+
+<div class="app-wrapper">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="main-header">
+    <a href="#" class="brand-block" id="brand-home">
+      <div class="brand-icon" aria-hidden="true">⚡</div>
+      <div>
+        <h1 class="brand-title">DevLibrary <span>Interactive</span></h1>
+        <p class="brand-desc">Интерактивная библиотека программирования с конспектами и квизами</p>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <div class="search-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="catalog-search-input" class="search-input" placeholder="Поиск книги, автора или темы..." aria-label="Поиск по книгам">
+        <span class="search-shortcut-hint">/</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO & STATS ==================== -->
+  <section class="hero-banner">
+    <div class="hero-text">
+      <h2>Книжные полки по языкам программирования</h2>
+      <p>Никаких затянутых видеоуроков: читайте структурированные выжимки, изучайте код и проверяйте знания в интерактивных тестах по каждой главе.</p>
+    </div>
+
+    <div class="global-stats-row">
+      <div class="stat-chip py">
+        <span aria-hidden="true">📚</span>
+        <span>Изданий: <strong>7</strong></span>
+      </div>
+      <div class="stat-chip green">
+        <span aria-hidden="true">🧠</span>
+        <span>Всего глав: <strong>141</strong></span>
+      </div>
+      <div class="stat-chip amber">
+        <span aria-hidden="true">✅</span>
+        <span>Тестов: <strong>141 квиз</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SHELF FILTER PILLS ==================== -->
+  <nav class="filter-shelf-nav" role="tablist" aria-label="Выбор полки">
+    <button type="button" class="shelf-pill-btn active" data-filter="all" id="btn-filter-all">
+      <span>📚 Все полки</span>
+      <span class="pill-counter">7</span>
+    </button>
+    <button type="button" class="shelf-pill-btn" data-filter="python" id="btn-filter-python">
+      <span>🐍 Python</span>
+      <span class="pill-counter">3</span>
+    </button>
+    <button type="button" class="shelf-pill-btn" data-filter="javascript" id="btn-filter-js">
+      <span>🦏 JavaScript</span>
+      <span class="pill-counter">3</span>
+    </button>
+    <button type="button" class="shelf-pill-btn" data-filter="cpp" id="btn-filter-cpp">
+      <span>⚙️ C / C++</span>
+      <span class="pill-counter">1</span>
+    </button>
+    <button type="button" class="shelf-pill-btn" data-filter="upcoming" id="btn-filter-upcoming">
+      <span>🌐 В планах</span>
+      <span class="pill-counter">6</span>
+    </button>
+  </nav>
+
+  <!-- No Search Results Placeholder -->
+  <div class="no-results-state" id="no-results-msg">
+    <h3>Ничего не найдено</h3>
+    <p>Попробуйте изменить поисковый запрос (например: «Python», «C++», «Django», «ООП» или «Майер»).</p>
+  </div>
+
+  <!-- ==================== SHELVES CONTAINER ==================== -->
+  <main class="shelves-container" id="shelves-container">
+
+    <!-- ========== SHELF 1: PYTHON ========== -->
+    <section class="shelf-block" data-shelf="python" id="shelf-section-python">
+      <div class="shelf-heading-row">
+        <div class="shelf-title-wrap">
+          <div class="shelf-lang-icon py" aria-hidden="true">🐍</div>
+          <div>
+            <h3>Полка: Язык Python</h3>
+            <span class="shelf-heading-desc">Разработка на основе тестирования, чистый код и архитектура веб-приложений</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="books-grid">
+
+        <!-- Card 1: Python TDD -->
+        <article class="book-tech-card card-py-tdd" data-book-id="python-tdd" data-search="python разработка на основе тестирования tdd django selenium гарри персиваль web frontend unit tests">
+          <div class="card-top">
+            <a href="site/python-tdd/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/python_tdd.jpg" alt="Обложка Python: TDD" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge py">🐍 Python · TDD</span>
+                <span class="meta-edition">624 стр. · 2018</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/python-tdd/">Python. Разработка на основе тестирования</a>
+              </h4>
+              <p class="book-card-author">Гарри Персиваль</p>
+              <p class="book-card-desc">Пошаговое освоение методики TDD (Test-Driven Development) от первого функционального теста до развертывания веб-сервиса на Django, Selenium и JavaScript.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#TDD</span>
+                <span class="topic-tag">#Django</span>
+                <span class="topic-tag">#Selenium</span>
+                <span class="topic-tag">#Mocking</span>
+                <span class="topic-tag">#CI</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-python-tdd">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-python-tdd">0 / 26 глав</b></span>
+              <span class="progress-percent" id="stat-pct-python-tdd">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-python-tdd"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=python-tdd&ch=1" class="btn-primary-action" id="btn-start-python-tdd">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/python-tdd/#contents" class="btn-secondary-action" title="Оглавление со списком всех частей">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-python-tdd" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 26 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-python-tdd">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Clean Code -->
+        <article class="book-tech-card card-clean-code" data-book-id="clean-code" data-search="искусство чистого кода кристиан майер парето 80/20 unix минимализм рефакторинг простота python">
+          <div class="card-top">
+            <a href="site/clean-code/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/clean_code.jpg" alt="Обложка Искусство чистого кода" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge clean">💎 Python · Архитектура</span>
+                <span class="meta-edition">241 стр. · 2023</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/clean-code/">Искусство чистого кода</a>
+              </h4>
+              <p class="book-card-author">Кристиан Майер</p>
+              <p class="book-card-desc">Девять фундаментальных принципов минимализма: устранение программной энтропии, закон Парето 80/20, правила философии Unix и борьба с преждевременной оптимизацией.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#CleanCode</span>
+                <span class="topic-tag">#Pareto80_20</span>
+                <span class="topic-tag">#MVP</span>
+                <span class="topic-tag">#UnixWay</span>
+                <span class="topic-tag">#Focus</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-clean-code">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-clean-code">0 / 9 глав</b></span>
+              <span class="progress-percent" id="stat-pct-clean-code">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-clean-code"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=clean-code&ch=1" class="btn-primary-action" id="btn-start-clean-code">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/clean-code/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-clean-code" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 9 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-clean-code">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Python Patterns (DDD) -->
+        <article class="book-tech-card card-py-tdd" data-book-id="python-patterns" data-search="паттерны разработки на python tdd ddd clean architecture гарри персиваль боб грегори репозиторий unit of work cqrs шина сообщений microservices">
+          <div class="card-top">
+            <a href="site/python-patterns/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/python_patterns.jpg" alt="Обложка Паттерны разработки на Python" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge py">🐍 Python · DDD &amp; Архитектура</span>
+                <span class="meta-edition">336 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/python-patterns/">Паттерны разработки на Python</a>
+              </h4>
+              <p class="book-card-author">Гарри Персиваль, Боб Грегори</p>
+              <p class="book-card-desc">TDD, DDD и чистая архитектура (Cosmic Python): паттерны «Репозиторий», «Единица работы» (UoW), агрегаты, шина сообщений и событийно-управляемые микросервисы.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#DDD</span>
+                <span class="topic-tag">#Repository</span>
+                <span class="topic-tag">#UnitOfWork</span>
+                <span class="topic-tag">#MessageBus</span>
+                <span class="topic-tag">#CQRS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-python-patterns">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-python-patterns">0 / 13 глав</b></span>
+              <span class="progress-percent" id="stat-pct-python-patterns">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-python-patterns"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=python-patterns&ch=1" class="btn-primary-action" id="btn-start-python-patterns">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/python-patterns/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-python-patterns" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 13 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-python-patterns">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== SHELF: JAVASCRIPT ========== -->
+    <section class="shelf-block" data-shelf="javascript" id="shelf-section-javascript">
+      <div class="shelf-heading-row">
+        <div class="shelf-title-wrap">
+          <div class="shelf-lang-icon js" aria-hidden="true">🦏</div>
+          <div>
+            <h3>Полка: Язык JavaScript</h3>
+            <span class="shelf-heading-desc">Авторитетное классическое руководство, ядро языка, веб-браузеры и серверный Node.js</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="books-grid">
+
+        <!-- Card: JS Definitive Guide -->
+        <article class="book-tech-card card-js-guide" data-book-id="javascript-definitive-guide" data-search="javascript подробное руководство дэвид флэнаган es6 es2020 dom async promises fetch nodejs">
+          <div class="card-top">
+            <a href="site/javascript-definitive-guide/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/javascript_guide.jpg" alt="Обложка JavaScript. Подробное руководство" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge js">🦏 JavaScript · 7-е издание</span>
+                <span class="meta-edition">732 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/javascript-definitive-guide/">JavaScript. Подробное руководство</a>
+              </h4>
+              <p class="book-card-author">Дэвид Флэнаган</p>
+              <p class="book-card-desc">«Библия веб-разработчика»: от лексической структуры, замыканий и классов до асинхронности (Promises, async/await), метапрограммирования, DOM и потоков Node.js.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#JavaScript</span>
+                <span class="topic-tag">#ES2020</span>
+                <span class="topic-tag">#AsyncAwait</span>
+                <span class="topic-tag">#DOM</span>
+                <span class="topic-tag">#NodeJS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-javascript-definitive-guide">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-javascript-definitive-guide">0 / 17 глав</b></span>
+              <span class="progress-percent" id="stat-pct-javascript-definitive-guide">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-javascript-definitive-guide"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=javascript-definitive-guide&ch=1" class="btn-primary-action" id="btn-start-javascript-definitive-guide">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/javascript-definitive-guide/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-javascript-definitive-guide" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 17 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-javascript-definitive-guide">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: YDKJS (Кайл Симпсон) -->
+        <article class="book-tech-card card-ydkjs" data-book-id="ydkjs" data-search="вы пока еще не знаете js ydkjs кайл симпсон область видимости замыкания scope closures hoisting tdz let const pole modules">
+          <div class="card-top">
+            <a href="site/ydkjs/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/ydkjs.jpg" alt="Обложка Вы пока еще не знаете JS" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge js">⚡ JavaScript · 2-е издание</span>
+                <span class="meta-edition">240 стр. · 2022</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/ydkjs/">Вы пока еще не знаете JS: Замыкания и область видимости</a>
+              </h4>
+              <p class="book-card-author">Кайл Симпсон (getify)</p>
+              <p class="book-card-desc">Глубокое погружение в компиляцию JS движком V8, цепочку лексических областей, принцип наименьшего раскрытия (POLE), поднятие (Hoisting), Temporal Dead Zone и архитектуру модулей на замыканиях.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#Scope</span>
+                <span class="topic-tag">#Closures</span>
+                <span class="topic-tag">#Hoisting</span>
+                <span class="topic-tag">#TDZ</span>
+                <span class="topic-tag">#POLE</span>
+                <span class="topic-tag">#Modules</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-ydkjs">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-ydkjs">0 / 10 глав</b></span>
+              <span class="progress-percent" id="stat-pct-ydkjs">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-ydkjs"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=ydkjs&ch=1" class="btn-primary-action" id="btn-start-ydkjs">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/ydkjs/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-ydkjs" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 10 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-ydkjs">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: JavaScript с нуля (Кирупа Чиннатхамби) -->
+        <article class="book-tech-card card-js-nulya" data-book-id="javascript-s-nulya" data-search="javascript с нуля кирупа чиннатхамби основы dom события функции циклы классы json">
+          <div class="card-top">
+            <a href="site/javascript-s-nulya/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/js_s_nulya.jpg" alt="Обложка JavaScript с нуля" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge js">🚀 JavaScript · Базовый курс</span>
+                <span class="meta-edition">400 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/javascript-s-nulya/">JavaScript с нуля</a>
+              </h4>
+              <p class="book-card-author">Кирупа Чиннатхамби</p>
+              <p class="book-card-desc">Понятное и наглядное руководство: от переменных, условий и циклов до классов, манипуляций с элементами DOM, анимаций и обработки событий мыши и клавиатуры.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#JSBasics</span>
+                <span class="topic-tag">#DOM</span>
+                <span class="topic-tag">#Events</span>
+                <span class="topic-tag">#Classes</span>
+                <span class="topic-tag">#JSON</span>
+                <span class="topic-tag">#Timers</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-javascript-s-nulya">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-javascript-s-nulya">0 / 37 глав</b></span>
+              <span class="progress-percent" id="stat-pct-javascript-s-nulya">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-javascript-s-nulya"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=javascript-s-nulya&ch=1" class="btn-primary-action" id="btn-start-javascript-s-nulya">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/javascript-s-nulya/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-javascript-s-nulya" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 37 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-javascript-s-nulya">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== SHELF 2: C / C++ ========== -->
+    <section class="shelf-block" data-shelf="cpp" id="shelf-section-cpp">
+      <div class="shelf-heading-row">
+        <div class="shelf-title-wrap">
+          <div class="shelf-lang-icon cpp" aria-hidden="true">⚙️</div>
+          <div>
+            <h3>Полка: Язык C / C++</h3>
+            <span class="shelf-heading-desc">Системное программирование, прямое управление памятью, указатели и объектная модель</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="books-grid">
+
+        <!-- Card 3: C++ Dummies -->
+        <article class="book-tech-card card-cpp" data-book-id="cpp-dummies" data-search="c++ для чайников стефан дэвис указатели память ооп классы компилятор iostream наследование">
+          <div class="card-top">
+            <a href="site/cpp-dummies/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/cpp_dummies.jpg" alt="Обложка C++ для чайников" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge cpp">⚙️ C / C++ · Системный код</span>
+                <span class="meta-edition">337 стр. · 2003</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/cpp-dummies/">C++ для чайников</a>
+              </h4>
+              <p class="book-card-author">Стефан Р. Дэвис</p>
+              <p class="book-card-desc">Простое и наглядное руководство по C++: базовые типы, массивы, арифметика указателей, классы, конструкторы, виртуальный полиморфизм и перегрузка операторов.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#Pointers</span>
+                <span class="topic-tag">#OOP</span>
+                <span class="topic-tag">#Classes</span>
+                <span class="topic-tag">#Memory</span>
+                <span class="topic-tag">#VirtualFunctions</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-cpp-dummies">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-cpp-dummies">0 / 29 глав</b></span>
+              <span class="progress-percent" id="stat-pct-cpp-dummies">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-cpp-dummies"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=cpp-dummies&ch=1" class="btn-primary-action" id="btn-start-cpp-dummies">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/cpp-dummies/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-cpp-dummies" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 29 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-cpp-dummies">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== SHELF 3: UPCOMING / PLANNED ========== -->
+    <section class="shelf-block" data-shelf="upcoming" id="shelf-section-upcoming">
+      <div class="shelf-heading-row">
+        <div class="shelf-title-wrap">
+          <div class="shelf-lang-icon future" aria-hidden="true">🌐</div>
+          <div>
+            <h3>Полка: Web &amp; Перспективные языки</h3>
+            <span class="shelf-heading-desc">Запланированные интерактивные издания в очереди на адаптацию</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="books-grid">
+
+        <div class="upcoming-card" data-search="разработка на javascript крис минник frontend архитектура">
+          <div>
+            <span class="upcoming-badge">Очередь #1 · JS</span>
+            <h4>Разработка на JavaScript</h4>
+            <p>Крис Минник, Ева Холланд · Современная веб-разработка, интерактивные интерфейсы, AJAX и практические приложения.</p>
+          </div>
+          <div class="topics-list">
+            <span class="topic-tag">#WebDev</span>
+            <span class="topic-tag">#SPA</span>
+            <span class="topic-tag">#Frontend</span>
+          </div>
+        </div>
+
+        <div class="upcoming-card" data-search="эффективный typescript 62 способа улучшить код дэн вандеркам typing generics">
+          <div>
+            <span class="upcoming-badge">Очередь #5 · TS</span>
+            <h4>Эффективный TypeScript</h4>
+            <p>Дэн Вандеркам · 62 практических правила проектирования системы типов, вывод типов, дженерики и миграция с JS.</p>
+          </div>
+          <div class="topics-list">
+            <span class="topic-tag">#TypeScript</span>
+            <span class="topic-tag">#Generics</span>
+            <span class="topic-tag">#TypeSafety</span>
+          </div>
+        </div>
+
+        <div class="upcoming-card" data-search="профессиональный typescript борис черный масштабные приложения oop">
+          <div>
+            <span class="upcoming-badge">Очередь #6 · TS</span>
+            <h4>Профессиональный TypeScript</h4>
+            <p>Борис Черный · Разработка надежных масштабируемых корпоративных систем, продвинутые типы и шаблоны проектирования.</p>
+          </div>
+          <div class="topics-list">
+            <span class="topic-tag">#AdvancedTS</span>
+            <span class="topic-tag">#Enterprise</span>
+            <span class="topic-tag">#Architecture</span>
+          </div>
+        </div>
+
+        <div class="upcoming-card" data-search="typescript быстро яков файн антон моисеев web frontend">
+          <div>
+            <span class="upcoming-badge">Очередь #7 · TS</span>
+            <h4>TypeScript быстро</h4>
+            <p>Яков Файн, Антон Моисеев · Экспресс-курс по современному TypeScript, классам, интерфейсам и интеграции с фреймворками.</p>
+          </div>
+          <div class="topics-list">
+            <span class="topic-tag">#TSQuickly</span>
+            <span class="topic-tag">#Frontend</span>
+            <span class="topic-tag">#Patterns</span>
+          </div>
+        </div>
+
+        <div class="upcoming-card" data-search="total typescript matt pocock advanced type-level programming">
+          <div>
+            <span class="upcoming-badge">Очередь #8 · TS</span>
+            <h4>Total TypeScript</h4>
+            <p>Мэтт Покок · Бестселлер по программированию на уровне типов, условные типы, шаблонные литералы и внутренняя магия TS.</p>
+          </div>
+          <div class="topics-list">
+            <span class="topic-tag">#TypeLevel</span>
+            <span class="topic-tag">#TotalTS</span>
+            <span class="topic-tag">#Wizards</span>
+          </div>
+        </div>
+
+        <div class="upcoming-card" data-search="тестирование веб-api марк винтерингем rest api e2e mock postman">
+          <div>
+            <span class="upcoming-badge">Очередь #9 · QA</span>
+            <h4>Тестирование веб-API</h4>
+            <p>Марк Винтерингем · Полное практическое руководство: автоматизация, интеграционные проверки REST, мокирование и безопасность.</p>
+          </div>
+          <div class="topics-list">
+            <span class="topic-tag">#APITesting</span>
+            <span class="topic-tag">#Automation</span>
+            <span class="topic-tag">#REST</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="library-footer">
+    <div class="footer-left">
+      <span>📚 <b>DevLibrary</b> — Интерактивная веб-библиотека для программистов</span>
+      <span>•</span>
+      <span>141 глава с интерактивными квизами</span>
+    </div>
+    <div>
+      <span>Удобные горячие клавиши: нажмите <code style="font-family:var(--font-mono);background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">/</code> для быстрого поиска</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ==================== SCRIPT ==================== -->
+<script>
+(() => {
+  'use strict';
+
+  const BOOKS_CONFIG = [
+    {
+      id: 'python-tdd',
+      title: 'Python. Разработка на основе тестирования',
+      totalChapters: 26,
+      baseUrl: 'site/python-tdd/'
+    },
+    {
+      id: 'clean-code',
+      title: 'Искусство чистого кода',
+      totalChapters: 9,
+      baseUrl: 'site/clean-code/'
+    },
+    {
+      id: 'python-patterns',
+      title: 'Паттерны разработки на Python',
+      totalChapters: 13,
+      baseUrl: 'site/python-patterns/'
+    },
+    {
+      id: 'javascript-definitive-guide',
+      title: 'JavaScript. Подробное руководство',
+      totalChapters: 17,
+      baseUrl: 'site/javascript-definitive-guide/'
+    },
+    {
+      id: 'ydkjs',
+      title: 'Вы пока еще не знаете JS (Scope & Closures)',
+      totalChapters: 10,
+      baseUrl: 'site/ydkjs/'
+    },
+    {
+      id: 'javascript-s-nulya',
+      title: 'JavaScript с нуля',
+      totalChapters: 37,
+      baseUrl: 'site/javascript-s-nulya/'
+    },
+    {
+      id: 'cpp-dummies',
+      title: 'C++ для чайников',
+      totalChapters: 29,
+      baseUrl: 'site/cpp-dummies/'
+    }
+  ];
+
+  // 1. Populate Chapter Jump Grids & Calculate Reading Progress
+  function updateProgressAndDrawers() {
+    BOOKS_CONFIG.forEach(book => {
+      const drawer = document.getElementById(`drawer-grid-${book.id}`);
+      let doneCount = 0;
+      let lastVisited = 1;
+
+      // Check localStorage for progress
+      // Check individual quiz completion or book progress
+      let bookStorageDone = new Set();
+      try {
+        const saved = JSON.parse(localStorage.getItem(book.id) || '{}');
+        if (Array.isArray(saved?.done)) {
+          saved.done.forEach(n => bookStorageDone.add(n));
+        }
+        if (saved?.last && Number.isInteger(saved.last)) {
+          lastVisited = saved.last;
+        }
+      } catch (e) {}
+
+      let pillsHtml = '';
+      for (let ch = 1; ch <= book.totalChapters; ch++) {
+        const chStr = String(ch).padStart(2, '0');
+        const chQuizKey = `${book.id}-ch${chStr}`;
+        const isDone = bookStorageDone.has(ch) || localStorage.getItem(chQuizKey) === 'passed';
+
+        if (isDone) {
+          doneCount++;
+          if (ch >= lastVisited) lastVisited = Math.min(book.totalChapters, ch + 1);
+        }
+
+        pillsHtml += `<a href="site/reader.html?book=${book.id}&ch=${ch}" class="ch-pill-jump ${isDone ? 'done' : ''}" title="Глава ${ch}">
+          ${ch}${isDone ? '✓' : ''}
+        </a>`;
+      }
+
+      if (drawer) {
+        drawer.innerHTML = pillsHtml;
+      }
+
+      // Update progress bar & label
+      const pct = Math.round((doneCount / book.totalChapters) * 100);
+      const countEl = document.getElementById(`stat-count-${book.id}`);
+      const pctEl = document.getElementById(`stat-pct-${book.id}`);
+      const fillEl = document.getElementById(`fill-${book.id}`);
+      const startBtn = document.getElementById(`btn-start-${book.id}`);
+
+      if (countEl) countEl.textContent = `${doneCount} / ${book.totalChapters} глав`;
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+
+      if (startBtn && doneCount > 0 && doneCount < book.totalChapters) {
+        startBtn.innerHTML = `<span>▶ Продолжить с гл. ${lastVisited} →</span>`;
+        startBtn.href = `site/reader.html?book=${book.id}&ch=${lastVisited}`;
+      } else if (startBtn && doneCount === book.totalChapters) {
+        startBtn.innerHTML = `<span>🎉 Пройдено целиком! Повторить →</span>`;
+        startBtn.href = `site/reader.html?book=${book.id}&ch=1`;
+      } else if (startBtn) {
+        startBtn.href = `site/reader.html?book=${book.id}&ch=1`;
+      }
+    });
+  }
+
+  // 2. Setup Accordion Toggles
+  document.querySelectorAll('.drawer-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const grid = document.getElementById(targetId);
+      if (!grid) return;
+
+      const isOpen = grid.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+
+  // 3. Setup Filter Pills
+  const filterPills = document.querySelectorAll('.shelf-pill-btn');
+  const shelfBlocks = document.querySelectorAll('.shelf-block');
+
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+
+      const filter = pill.getAttribute('data-filter');
+      shelfBlocks.forEach(shelf => {
+        if (filter === 'all' || shelf.getAttribute('data-shelf') === filter) {
+          shelf.style.display = '';
+        } else {
+          shelf.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // 4. Setup Real-time Search
+  const searchInput = document.getElementById('catalog-search-input');
+  const noResultsMsg = document.getElementById('no-results-msg');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      let totalVisible = 0;
+
+      shelfBlocks.forEach(shelf => {
+        let shelfHasMatch = false;
+        const cards = shelf.querySelectorAll('.book-tech-card, .upcoming-card');
+
+        cards.forEach(card => {
+          const searchData = (card.getAttribute('data-search') || '') + ' ' + card.textContent;
+          const matches = !query || searchData.toLowerCase().includes(query);
+
+          card.style.display = matches ? '' : 'none';
+          if (matches) {
+            shelfHasMatch = true;
+            totalVisible++;
+          }
+        });
+
+        shelf.style.display = shelfHasMatch ? '' : 'none';
+      });
+
+      if (noResultsMsg) {
+        noResultsMsg.classList.toggle('visible', totalVisible === 0);
+      }
+    });
+
+    // Keyboard shortcut '/' to focus search, Esc to clear
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      } else if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.blur();
+      }
+    });
+  }
+
+  // Initialize
+  updateProgressAndDrawers();
+})();
+</script>
+
+</body>
+</html>

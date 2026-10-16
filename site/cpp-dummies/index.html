@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C++ для чайников — Стефан Р. Дэвис</title>
+<meta name="description" content="Интерактивная книга: Простое и наглядное руководство по программированию на языке C++">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c1524'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='40' fill='%23facc15'%3EC++%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #0c1524;
+  --chalk: #f8fafc;
+  --top-bg: rgba(12, 21, 36, .92);
+  --top-line: #1e293b;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  border-radius: 9999px;
+  color: #facc15;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(250, 204, 21, 0.15);
+  border-color: #facc15;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 186px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">#include &lt;iostream&gt;</span>
+    <span style="right:8%;top:17%;--d:1.9">std::cout &lt;&lt; "Hello World!"</span>
+    <span style="left:5%;bottom:20%;--d:2.2">class Object { virtual ~Object(); };</span>
+    <span style="right:6%;bottom:15%;--d:2.5">Memory: Pointers &amp; References</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка книги" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка C / C++</p>
+  <h1>C++ <i>&amp;</i> Для чайников</h1>
+  <p class="lede">Простое, живое и наглядное руководство по программированию на C++: от первой программы до классов, указателей и ООП.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>C++ <i>&amp;</i> Для чайников</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'cpp-dummies',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Первое знакомство с C++', [
+      ['Написание вашей первой программы на C++', 8],
+      ['Премудрости объявления переменных', 9],
+      ['Выполнение математических операций', 7],
+      ['Выполнение логических операций', 8],
+      ['Операторы управления программой: ветвления и циклы', 10]
+    ]],
+    ['Часть II. Становимся программистами', [
+      ['Создание функций и передача аргументов', 11],
+      ['Хранение последовательностей в массивах', 10],
+      ['Первое знакомство с указателями в C++', 14],
+      ['Второе знакомство с указателями и адресацией', 12],
+      ['Функциональные особенности и структуры', 10],
+      ['Отладка программ на C++', 11]
+    ]],
+    ['Часть III. Объектно-ориентированное программирование', [
+      ['Знакомство с ООП', 9],
+      ['Классы в C++', 11],
+      ['Работа с методами и свойствами', 10],
+      ['Указатели на объекты', 12],
+      ['Защищенные члены класса: инкапсуляция', 10],
+      ['Создание и удаление объектов: конструктор и деструктор', 13],
+      ['Перегрузка конструкторов', 10],
+      ['Копирующий конструктор', 11],
+      ['Статические члены класса', 9]
+    ]],
+    ['Часть IV. Наследование и полиморфизм', [
+      ['Наследование классов', 12],
+      ['Виртуальные функции-члены: настоящие ли они?', 14],
+      ['Разложение классов и абстрактные интерфейсы', 11]
+    ]],
+    ['Часть V. Полезные особенности и стандарты', [
+      ['Перегрузка операторов', 12],
+      ['Перегрузка оператора присвоения', 10],
+      ['Использование потоков ввода-вывода (iostream)', 11],
+      ['Обработка ошибок и исключения (try/catch)', 12],
+      ['Множественное наследование', 11],
+      ['Десять способов избежать ошибок', 9]
+    ]]
+  ],
+  hues: ['#facc15', '#38bdf8', '#06b6d4', '#10b981', '#f59e0b']
+});
+</script>
+</body>
+</html>

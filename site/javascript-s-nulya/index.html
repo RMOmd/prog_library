@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript с нуля — Кирупа Чиннатхамби</title>
+<meta name="description" content="Интерактивная книга: JavaScript с нуля (JavaScript Absolute Beginner's Guide) — Кирупа Чиннатхамби. 37 глав с интерактивными конспектами и тестами для быстрого старта в веб-разработке.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318181b'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='40' fill='%2310b981'%3E🚀%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #0c1815;
+  --chalk: #d1fae5;
+  --top-bg: rgba(12, 24, 21, .92);
+  --top-line: #1c362f;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(24, 24, 27, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 9999px;
+  color: #34d399;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #34d399;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">console.log("Hello, world!")</span>
+    <span style="right:8%;top:17%;--d:1.9">document.querySelector("#app")</span>
+    <span style="left:5%;bottom:20%;--d:2.2">element.addEventListener("click", fn)</span>
+    <span style="right:6%;bottom:15%;--d:2.5">class Hero extends Character</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка книги JavaScript с нуля" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка JavaScript</p>
+  <h1>JavaScript <i>с нуля</i></h1>
+  <p class="lede">Понятное и наглядное руководство от Кирупы Чиннатхамби. От переменных, условий и циклов до объектов, классов, манипуляций с DOM и обработки событий мыши и клавиатуры.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>JS с нуля (Чиннатхамби)</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'javascript-s-nulya',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Элементарно, Ватсон (Основы и синтаксис)', [
+      ['Hello, world!', 6],
+      ['Значения и переменные', 7],
+      ['Функции', 8],
+      ['Условные обозначения: if…else и switch', 8],
+      ['Циклы for, while и do…while', 7],
+      ['Комментирование кода… что за?!', 5],
+      ['Таймеры: setTimeout и setInterval', 7],
+      ['Область видимости переменных', 8],
+      ['Замыкания', 8],
+      ['Где можно размещать код?', 6]
+    ]],
+    ['Часть II. Это объектно-ориентированный мир, дружок!', [
+      ['Вывод сообщений в консоль', 6],
+      ['О пицце, типах, примитивах и объектах', 8],
+      ['Массивы', 9],
+      ['Строки', 8],
+      ['Когда примитивы ведут себя как объекты', 7],
+      ['Числа', 7],
+      ['Методы получения и изменения данных (Getters / Setters)', 7],
+      ['Об объектах подробнее (this, прототипы)', 9],
+      ['Расширение встроенных объектов', 7],
+      ['Использование классов', 9],
+      ['Логические типы и операторы === и !==', 7],
+      ['null и undefined', 6]
+    ]],
+    ['Часть III. DOM милый DOM (Браузерное окружение)', [
+      ['Все о JSON (объектная нотация JavaScript)', 7],
+      ['JS, браузер и DOM', 8],
+      ['Поиск элементов в DOM', 8],
+      ['Модифицирование элементов DOM', 8],
+      ['Стиль контента и классы', 7],
+      ['Перемещение по DOM', 7],
+      ['Создание и удаление элементов DOM', 8],
+      ['Браузерные инструменты разработчика DevTools', 7]
+    ]],
+    ['Часть IV. Полны событиями (Интерактивные интерфейсы)', [
+      ['События и addEventListener', 8],
+      ['Всплытие и погружение событий (Bubbling & Capturing)', 9],
+      ['События мыши', 8],
+      ['События клавиатуры', 8],
+      ['События загрузки страницы и прочее', 7],
+      ['Обработка событий для нескольких элементов (Делегирование)', 8],
+      ['Заключение: дальнейший путь в веб-разработке', 6]
+    ]]
+  ],
+  hues: ['#10b981', '#38bdf8', '#f59e0b', '#ec4899']
+});
+</script>
+</body>
+</html>

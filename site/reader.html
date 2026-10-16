@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="reader-doc-title">Интерактивный ридер — DevLibrary</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318181b'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='38' fill='%2338bdf8'%3E📖%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="lib/reader.css">
+<style>
+/* Reader Top Navigation Bar Extra Controls */
+.reader-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chapter-select-dropdown {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  max-width: 240px;
+}
+
+.chapter-select-dropdown:hover, .chapter-select-dropdown:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent-blue);
+}
+
+.chapter-select-dropdown option {
+  background: #131b2a;
+  color: #e2e8f0;
+}
+
+.font-size-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.font-size-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+}
+
+.kbd-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-left: 6px;
+  font-family: var(--font-code);
+}
+
+.chapter-loading-state {
+  text-align: center;
+  padding: 100px 20px;
+  color: var(--text-muted);
+  font-size: 18px;
+}
+
+.chapter-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(56, 189, 248, 0.2);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<div id="reading-progress-bar"></div>
+
+<!-- Reader Sticky Header -->
+<header class="reader-navbar">
+  <div class="reader-nav-left">
+    <a href="../" class="nav-back-link" id="btn-back-to-book">
+      <span>←</span> <span id="back-nav-text">Оглавление</span>
+    </a>
+    <div class="nav-breadcrumbs" id="reader-breadcrumbs">
+      <span id="nav-book-title">Загрузка книги...</span>
+    </div>
+  </div>
+
+  <div class="reader-controls-group">
+    <!-- Quick Chapter Select Dropdown -->
+    <select id="chapter-select" class="chapter-select-dropdown" aria-label="Выбор главы"></select>
+
+    <!-- Font Size Switchers -->
+    <button type="button" class="font-size-btn" id="btn-font-decrease" title="Уменьшить шрифт">A-</button>
+    <button type="button" class="font-size-btn" id="btn-font-increase" title="Увеличить шрифт">A+</button>
+  </div>
+</header>
+
+<!-- Main Reader Body -->
+<main class="reader-container" id="reader-main">
+  <div id="reader-loading" class="chapter-loading-state">
+    <div class="chapter-loading-spinner"></div>
+    <p>Загрузка интерактивной главы...</p>
+  </div>
+
+  <div id="reader-content-box" style="display: none;">
+    <div class="chapter-meta">
+      <span class="reading-time" id="meta-reading-time">⏱️ ~10 мин чтения</span>
+      <span class="reading-time" id="meta-quiz-info">🎯 Текст + Интерактивный квиз</span>
+      <span class="reading-time" id="meta-progress-chip" style="color: #38bdf8; font-weight: 600;"></span>
+    </div>
+
+    <h1 class="chapter-title" id="chapter-title"></h1>
+    <p class="chapter-subtitle" id="chapter-subtitle"></p>
+
+    <article class="chapter-content" id="chapter-content-body"></article>
+
+    <!-- Interactive Quiz Section -->
+    <section id="chapter-quiz" class="quiz-section"></section>
+
+    <!-- Navigation Footer -->
+    <nav class="chapter-nav-footer">
+      <button type="button" class="btn-nav-chapter" id="btn-prev-chapter">
+        <span>← Пред. глава</span> <span class="kbd-hint">←</span>
+      </button>
+      <a href="#" class="btn-nav-chapter" id="btn-toc-link">
+        <span>📋 Все главы</span>
+      </a>
+      <button type="button" class="btn-nav-chapter primary" id="btn-next-chapter">
+        <span>След. глава →</span> <span class="kbd-hint">→</span>
+      </button>
+    </nav>
+  </div>
+</main>
+
+<script src="lib/reader.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  let currentBookData = null;
+  let currentChapterNum = 1;
+  let currentFontSize = 17;
+
+  // URL Parameters
+  const params = new URLSearchParams(window.location.search);
+  const bookId = params.get('book') || 'python-tdd';
+  const initialChapter = parseInt(params.get('ch') || '1', 10);
+
+  // Setup Back Button
+  const backBtn = document.getElementById('btn-back-to-book');
+  const tocBtn = document.getElementById('btn-toc-link');
+  if (backBtn) backBtn.href = `${bookId}/#contents`;
+  if (tocBtn) tocBtn.href = `${bookId}/#contents`;
+
+  // Dynamically Load Book Data Script
+  const scriptEl = document.createElement('script');
+  scriptEl.src = `${bookId}/book.js`;
+  scriptEl.onload = () => {
+    if (window.BOOK_DATA) {
+      initReader(window.BOOK_DATA, initialChapter);
+    } else {
+      showError('Данные книги не найдены в файле book.js');
+    }
+  };
+  scriptEl.onerror = () => {
+    showError(`Не удалось загрузить книгу: ${bookId}/book.js`);
+  };
+  document.head.appendChild(scriptEl);
+
+  function showError(msg) {
+    const loading = document.getElementById('reader-loading');
+    if (loading) {
+      loading.innerHTML = `
+        <div style="color: #ef4444; font-size: 32px; margin-bottom: 12px;">⚠️</div>
+        <h3>Ошибка загрузки книги</h3>
+        <p style="color: var(--text-muted); margin-top: 8px;">${msg}</p>
+        <p style="margin-top: 16px;"><a href="../" class="btn-nav-chapter">← Вернуться в библиотеку</a></p>
+      `;
+    }
+  }
+
+  function initReader(bookData, startChapter) {
+    currentBookData = bookData;
+
+    // Set Header Info
+    const navTitle = document.getElementById('nav-book-title');
+    if (navTitle) navTitle.textContent = `${bookData.title} (${bookData.author || ''})`;
+
+    // Populate Chapter Select Dropdown
+    const select = document.getElementById('chapter-select');
+    if (select) {
+      select.innerHTML = '';
+      bookData.chapters.forEach(ch => {
+        const opt = document.createElement('option');
+        opt.value = ch.num;
+        opt.textContent = `Глава ${ch.num}: ${ch.title.replace(/^Глава\s+\d+\.\s*/, '')}`;
+        select.appendChild(opt);
+      });
+      select.addEventListener('change', (e) => {
+        loadChapter(parseInt(e.target.value, 10));
+      });
+    }
+
+    // Load Starting Chapter
+    loadChapter(startChapter);
+
+    // Setup Font Buttons
+    document.getElementById('btn-font-decrease')?.addEventListener('click', () => {
+      currentFontSize = Math.max(14, currentFontSize - 1);
+      document.body.style.fontSize = currentFontSize + 'px';
+    });
+    document.getElementById('btn-font-increase')?.addEventListener('click', () => {
+      currentFontSize = Math.min(22, currentFontSize + 1);
+      document.body.style.fontSize = currentFontSize + 'px';
+    });
+
+    // Keyboard Shortcuts (ArrowLeft / ArrowRight)
+    window.addEventListener('keydown', (e) => {
+      // Don't intercept if user is typing in an input
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+      if (e.key === 'ArrowLeft') {
+        if (currentChapterNum > 1) {
+          e.preventDefault();
+          loadChapter(currentChapterNum - 1);
+        }
+      } else if (e.key === 'ArrowRight') {
+        if (currentChapterNum < currentBookData.chapters.length) {
+          e.preventDefault();
+          loadChapter(currentChapterNum + 1);
+        }
+      }
+    });
+  }
+
+  function loadChapter(num) {
+    if (!currentBookData) return;
+    const ch = currentBookData.chapters.find(c => c.num === num) || currentBookData.chapters[0];
+    currentChapterNum = ch.num;
+
+    // Update URL Query without full page reload
+    const newUrl = `?book=${currentBookData.id}&ch=${ch.num}`;
+    window.history.replaceState({ ch: ch.num }, '', newUrl);
+
+    // Document Title
+    document.title = `${ch.title} — ${currentBookData.title}`;
+
+    // Update Dropdown selection
+    const select = document.getElementById('chapter-select');
+    if (select) select.value = ch.num;
+
+    // Update Meta and Headings
+    document.getElementById('chapter-title').textContent = ch.title;
+    document.getElementById('chapter-subtitle').textContent = ch.subtitle || '';
+    document.getElementById('meta-reading-time').textContent = `⏱️ ~${ch.minutes || 10} мин чтения`;
+
+    // Render Article HTML
+    const contentBox = document.getElementById('chapter-content-body');
+    contentBox.innerHTML = ch.contentHtml || '';
+
+    // Reattach code copy listeners
+    contentBox.querySelectorAll('.copy-code-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pre = btn.closest('.code-container, .code-block-wrapper')?.querySelector('code');
+        if (pre) {
+          navigator.clipboard.writeText(pre.innerText).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = 'Скопировано! ✔';
+            setTimeout(() => btn.textContent = orig, 1800);
+          });
+        }
+      });
+    });
+
+    // Initialize Interactive Quiz
+    const quizSlot = document.getElementById('chapter-quiz');
+    quizSlot.innerHTML = '';
+    const quizKey = `${currentBookData.id}-ch${String(ch.num).padStart(2, '0')}`;
+    if (Array.isArray(ch.quiz) && ch.quiz.length > 0) {
+      new ChapterQuiz('chapter-quiz', ch.quiz, {
+        chapterId: quizKey
+      });
+      document.getElementById('meta-quiz-info').style.display = '';
+    } else {
+      document.getElementById('meta-quiz-info').style.display = 'none';
+    }
+
+    // Save Progress in localStorage
+    saveReadingHistory(currentBookData.id, ch.num, currentBookData.totalChapters || currentBookData.chapters.length);
+
+    // Update Nav Buttons
+    const prevBtn = document.getElementById('btn-prev-chapter');
+    const nextBtn = document.getElementById('btn-next-chapter');
+    const total = currentBookData.chapters.length;
+
+    if (prevBtn) {
+      if (ch.num > 1) {
+        prevBtn.style.visibility = 'visible';
+        prevBtn.onclick = () => loadChapter(ch.num - 1);
+      } else {
+        prevBtn.style.visibility = 'hidden';
+      }
+    }
+
+    if (nextBtn) {
+      if (ch.num < total) {
+        nextBtn.innerHTML = `<span>Глава ${ch.num + 1} →</span> <span class="kbd-hint">→</span>`;
+        nextBtn.classList.add('primary');
+        nextBtn.onclick = () => loadChapter(ch.num + 1);
+      } else {
+        nextBtn.innerHTML = `<span>🎉 Завершить книгу →</span>`;
+        nextBtn.classList.remove('primary');
+        nextBtn.onclick = () => window.location.href = `${currentBookData.id}/#contents`;
+      }
+    }
+
+    // Show Content Box, Hide Loading
+    document.getElementById('reader-loading').style.display = 'none';
+    document.getElementById('reader-content-box').style.display = 'block';
+
+    // Scroll to Top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function saveReadingHistory(bookId, chNum, total) {
+    try {
+      let bookProg = JSON.parse(localStorage.getItem(bookId) || '{}');
+      if (!bookProg || typeof bookProg !== 'object') bookProg = {};
+      if (!Array.isArray(bookProg.done)) bookProg.done = [];
+
+      bookProg.last = chNum;
+      if (!bookProg.done.includes(chNum)) {
+        bookProg.done.push(chNum);
+      }
+      localStorage.setItem(bookId, JSON.stringify(bookProg));
+
+      // Update meta progress chip
+      const chip = document.getElementById('meta-progress-chip');
+      if (chip) {
+        const pct = Math.round((bookProg.done.length / total) * 100);
+        chip.textContent = `✓ Изучено: ${bookProg.done.length} из ${total} (${pct}%)`;
+      }
+    } catch (e) {}
+  }
+})();
+</script>
+
+</body>
+</html>
