@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TypeScript быстро — Яков Файн, Антон Моисеев</title>
+<meta name="description" content="Интерактивная книга: TypeScript быстро — Яков Файн, Антон Моисеев. Практический курс: основы, ООП, дженерики, декораторы и реальные проекты на Angular, React, Vue и блокчейне.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a8a'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='36' fill='%2360a5fa'%3E🚀%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #071122;
+  --chalk: #f1f5f9;
+  --top-bg: rgba(7, 17, 34, .94);
+  --top-line: #2563eb;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 9999px;
+  color: #38bdf8;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 198px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">TypeScript + Webpack + Babel</span>
+    <span style="right:8%;top:17%;--d:1.9">Blockchain: SHA-256 &amp; Proof of Work</span>
+    <span style="left:5%;bottom:20%;--d:2.2">Fullstack: Node.js &amp; WebSockets</span>
+    <span style="right:6%;bottom:15%;--d:2.5">Trifecta: Angular, React &amp; Vue</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка TypeScript быстро" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка TypeScript</p>
+  <h1>TypeScript <i>&amp;</i> быстро</h1>
+  <p class="lede">Практический гид от Якова Файна и Антона Моисеева (Manning): фундаментальный синтаксис, перечисления, дженерики, декораторы и сквозная разработка полноценного блокчейна на Node.js, Angular, React и Vue.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>TypeScript <i>&amp;</i> быстро</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'typescript-quickly',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Основы языка и система типов', [
+      ['Глава 1. Знакомство с TypeScript и рабочий процесс', 10],
+      ['Глава 2. Базовые, пользовательские типы и Type Guards', 14],
+      ['Глава 3. ООП: классы, интерфейсы и абстрактные типы', 14],
+      ['Глава 4. Перечисления (Enums) и обобщения (Generics)', 13]
+    ]],
+    ['Часть II. Продвинутые техники и инструменты', [
+      ['Глава 5. Декораторы и продвинутые типы', 15],
+      ['Глава 6. Инструменты: Webpack, Babel и отладка', 14],
+      ['Глава 7. Совместное использование TypeScript и JavaScript', 13]
+    ]],
+    ['Часть III. Полносвязное блокчейн-приложение', [
+      ['Глава 8. Архитектура блокчейна: хэширование SHA-256 и Proof of Work', 16],
+      ['Глава 9. Браузерный узел блокчейна и Web Crypto API', 15],
+      ['Глава 10. Серверная синхронизация: Node.js, Express и WebSockets', 16]
+    ]],
+    ['Часть IV. Практика на фреймворках: Angular, React и Vue', [
+      ['Глава 11. Архитектура приложений Angular с TypeScript', 14],
+      ['Глава 12. Разработка клиента блокчейна на Angular', 14],
+      ['Глава 13. Разработка приложений React.js с TSX и хуками', 14],
+      ['Глава 14. Разработка блокчейн-клиента на React', 14],
+      ['Глава 15. Разработка приложений Vue.js с TypeScript', 13],
+      ['Глава 16. Разработка блокчейн-клиента на Vue.js', 14]
+    ]]
+  ]
+});
+</script>
+</body>
+</html>

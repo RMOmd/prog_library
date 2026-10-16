@@ -440,6 +440,58 @@ body::before {
 }
 .card-js-guide .progress-fill { background: linear-gradient(90deg, #facc15, #f59e0b); }
 
+.book-tech-card.card-js-everywhere {
+  --card-accent-border: rgba(245, 158, 11, 0.45);
+  --card-glow: var(--shadow-glow-amber);
+}
+.card-js-everywhere .btn-primary-action {
+  background: #f59e0b;
+  color: #18181b;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+}
+.card-js-everywhere .btn-primary-action:hover {
+  background: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+.card-js-everywhere .progress-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+.book-tech-card.card-total-ts {
+  --card-accent-border: rgba(59, 130, 246, 0.45);
+  --card-glow: 0 0 30px rgba(59, 130, 246, 0.22);
+}
+.shelf-lang-icon.ts { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); }
+.lang-badge.ts { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.card-total-ts .btn-primary-action {
+  background: #3b82f6;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+}
+.card-total-ts .btn-primary-action:hover {
+  background: #60a5fa;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+.card-total-ts .progress-fill { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+.book-tech-card.card-effective-ts {
+  --card-accent-border: rgba(56, 189, 248, 0.45);
+  --card-glow: 0 0 30px rgba(56, 189, 248, 0.22);
+}
+.card-effective-ts .btn-primary-action {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+.card-effective-ts .btn-primary-action:hover {
+  background: #38bdf8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+}
+.card-effective-ts .progress-fill { background: linear-gradient(90deg, #0284c7, #38bdf8); }
+
+
+
 /* Card Top Section: Cover & Info */
 .card-top {
   display: flex;
@@ -921,15 +973,15 @@ body::before {
     <div class="global-stats-row">
       <div class="stat-chip py">
         <span aria-hidden="true">📚</span>
-        <span>Изданий: <strong>7</strong></span>
+        <span>Изданий: <strong>13</strong></span>
       </div>
       <div class="stat-chip green">
         <span aria-hidden="true">🧠</span>
-        <span>Всего глав: <strong>141</strong></span>
+        <span>Всего глав: <strong>230</strong></span>
       </div>
       <div class="stat-chip amber">
         <span aria-hidden="true">✅</span>
-        <span>Тестов: <strong>141 квиз</strong></span>
+        <span>Тестов: <strong>270 квизов</strong></span>
       </div>
     </div>
   </section>
@@ -938,7 +990,7 @@ body::before {
   <nav class="filter-shelf-nav" role="tablist" aria-label="Выбор полки">
     <button type="button" class="shelf-pill-btn active" data-filter="all" id="btn-filter-all">
       <span>📚 Все полки</span>
-      <span class="pill-counter">7</span>
+      <span class="pill-counter">13</span>
     </button>
     <button type="button" class="shelf-pill-btn" data-filter="python" id="btn-filter-python">
       <span>🐍 Python</span>
@@ -946,15 +998,23 @@ body::before {
     </button>
     <button type="button" class="shelf-pill-btn" data-filter="javascript" id="btn-filter-js">
       <span>🦏 JavaScript</span>
-      <span class="pill-counter">3</span>
+      <span class="pill-counter">4</span>
+    </button>
+    <button type="button" class="shelf-pill-btn" data-filter="typescript" id="btn-filter-ts">
+      <span>🔷 TypeScript</span>
+      <span class="pill-counter">4</span>
     </button>
     <button type="button" class="shelf-pill-btn" data-filter="cpp" id="btn-filter-cpp">
       <span>⚙️ C / C++</span>
       <span class="pill-counter">1</span>
     </button>
+    <button type="button" class="shelf-pill-btn" data-filter="testing" id="btn-filter-testing">
+      <span>🧪 QA &amp; API</span>
+      <span class="pill-counter">1</span>
+    </button>
     <button type="button" class="shelf-pill-btn" data-filter="upcoming" id="btn-filter-upcoming">
       <span>🌐 В планах</span>
-      <span class="pill-counter">6</span>
+      <span class="pill-counter">0</span>
     </button>
   </nav>
 
@@ -1354,6 +1414,319 @@ body::before {
           </div>
         </article>
 
+        <!-- Card: Разработка на JavaScript (Адам Скотт) -->
+        <article class="book-tech-card card-js-everywhere" data-book-id="razrabotka-na-javascript" data-search="разработка на javascript адам скотт adam scott graphql react react native electron fullstack nodejs express mongodb">
+          <div class="card-top">
+            <a href="site/razrabotka-na-javascript/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/razrabotka_na_javascript.jpg" alt="Обложка Разработка на JavaScript" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge js">🌐 Fullstack · Кроссплатформенный JS</span>
+                <span class="meta-edition">320 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/razrabotka-na-javascript/">Разработка на JavaScript</a>
+              </h4>
+              <p class="book-card-author">Адам Д. Скотт</p>
+              <p class="book-card-desc">Построение сквозного приложения Notedly: создание единого бэкенда на Node.js и GraphQL, SPA на React, десктопного клиента на Electron и мобильного приложения на React Native.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#FullstackJS</span>
+                <span class="topic-tag">#GraphQL</span>
+                <span class="topic-tag">#React</span>
+                <span class="topic-tag">#ReactNative</span>
+                <span class="topic-tag">#Electron</span>
+                <span class="topic-tag">#NodeJS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-razrabotka-na-javascript">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-razrabotka-na-javascript">0 / 25 глав</b></span>
+              <span class="progress-percent" id="stat-pct-razrabotka-na-javascript">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-razrabotka-na-javascript"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=razrabotka-na-javascript&ch=1" class="btn-primary-action" id="btn-start-razrabotka-na-javascript">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/razrabotka-na-javascript/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-razrabotka-na-javascript" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 25 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-razrabotka-na-javascript">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== SHELF 3: TYPESCRIPT ========== -->
+    <section class="shelf-block" data-shelf="typescript" id="shelf-typescript">
+      <div class="shelf-header">
+        <div class="shelf-title-left">
+          <div class="shelf-lang-icon ts" aria-hidden="true">🔷</div>
+          <div>
+            <h3>Полка: Экосистема TypeScript</h3>
+            <span class="shelf-heading-desc">Статическая типизация, безопасность типов и программирование на уровне типов</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="books-grid">
+
+        <!-- Card: Total TypeScript -->
+        <article class="book-tech-card card-total-ts" data-book-id="total-typescript" data-search="total typescript мэтт покок matt pocock type-level дженерики условные типы as const satisfies tsconfig">
+          <div class="card-top">
+            <a href="site/total-typescript/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/total_typescript.jpg" alt="Обложка Total TypeScript" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge ts">🔷 TypeScript · Магия типов</span>
+                <span class="meta-edition">557 стр. · 2024</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/total-typescript/">Total TypeScript</a>
+              </h4>
+              <p class="book-card-author">Мэтт Покок</p>
+              <p class="book-card-desc">Полный курс программирования на уровне типов: суперсилы IDE, сужение типов, дискриминантные объединения, as const, satisfies, условные типы и создание мощных утилит.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#TotalTS</span>
+                <span class="topic-tag">#Generics</span>
+                <span class="topic-tag">#ConditionalTypes</span>
+                <span class="topic-tag">#Satisfies</span>
+                <span class="topic-tag">#TypeLevel</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-total-typescript">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-total-typescript">0 / 16 глав</b></span>
+              <span class="progress-percent" id="stat-pct-total-typescript">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-total-typescript"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=total-typescript&ch=1" class="btn-primary-action" id="btn-start-total-typescript">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/total-typescript/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-total-typescript" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 16 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-total-typescript">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Effective TypeScript -->
+        <article class="book-tech-card card-effective-ts" data-book-id="effective-typescript" data-search="эффективный typescript дэн вандеркам dan vanderkam 62 правила проектирование типов вывод any миграция">
+          <div class="card-top">
+            <a href="site/effective-typescript/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/effective_typescript.jpg" alt="Обложка Эффективный TypeScript" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge ts">🔷 TypeScript · 62 правила</span>
+                <span class="meta-edition">288 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/effective-typescript/">Эффективный TypeScript</a>
+              </h4>
+              <p class="book-card-author">Дэн Вандеркам</p>
+              <p class="book-card-desc">62 практических правила проектирования системы типов: типы как множества значений, недопустимые состояния, закон Постела, безопасный any и миграция снизу вверх.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#EffectiveTS</span>
+                <span class="topic-tag">#BestPractices</span>
+                <span class="topic-tag">#TypeDesign</span>
+                <span class="topic-tag">#Migration</span>
+                <span class="topic-tag">#Architecture</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-effective-typescript">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-effective-typescript">0 / 8 глав</b></span>
+              <span class="progress-percent" id="stat-pct-effective-typescript">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-effective-typescript"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=effective-typescript&ch=1" class="btn-primary-action" id="btn-start-effective-typescript">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/effective-typescript/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-effective-typescript" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 8 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-effective-typescript">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Professional TypeScript -->
+        <article class="book-tech-card card-pro-ts" data-book-id="professional-typescript" data-search="профессиональный typescript борис черный boris cherny архитектура компилятор ast типы generics классы variance option workers npm">
+          <div class="card-top">
+            <a href="site/professional-typescript/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/professional_typescript.jpg" alt="Обложка Профессиональный TypeScript" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge ts">🔷 TypeScript · Архитектура</span>
+                <span class="meta-edition">352 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/professional-typescript/">Профессиональный TypeScript</a>
+              </h4>
+              <p class="book-card-author">Борис Черный</p>
+              <p class="book-card-desc">Разработка надежных веб-приложений: архитектура компилятора и AST, ковариантность и контравариантность, монада Option, типобезопасные Web Workers и разработка пакетов для NPM.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#Architecture</span>
+                <span class="topic-tag">#CompilerAST</span>
+                <span class="topic-tag">#Variance</span>
+                <span class="topic-tag">#Monads</span>
+                <span class="topic-tag">#WebWorkers</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-professional-typescript">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-professional-typescript">0 / 12 глав</b></span>
+              <span class="progress-percent" id="stat-pct-professional-typescript">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-professional-typescript"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=professional-typescript&ch=1" class="btn-primary-action" id="btn-start-professional-typescript">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/professional-typescript/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-professional-typescript" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 12 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-professional-typescript">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: TypeScript Quickly -->
+        <article class="book-tech-card card-ts-quickly" data-book-id="typescript-quickly" data-search="typescript быстро яков файн антон моисеев yakov fain anton moiseev blockchain angular react vue web crypto oop generics decorators">
+          <div class="card-top">
+            <a href="site/typescript-quickly/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/typescript_quickly.jpg" alt="Обложка TypeScript быстро" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge ts">🔷 TypeScript · Практикум</span>
+                <span class="meta-edition">528 стр. · 2021</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/typescript-quickly/">TypeScript быстро</a>
+              </h4>
+              <p class="book-card-author">Яков Файн, Антон Моисеев</p>
+              <p class="book-card-desc">Экспресс-курс с глубоким погружением: синтаксис, ООП, дженерики, декораторы и создание реального блокчейна с веб-клиентами на Angular, React и Vue.js.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#TSQuickly</span>
+                <span class="topic-tag">#Blockchain</span>
+                <span class="topic-tag">#Angular</span>
+                <span class="topic-tag">#React</span>
+                <span class="topic-tag">#VueJS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-typescript-quickly">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-typescript-quickly">0 / 16 глав</b></span>
+              <span class="progress-percent" id="stat-pct-typescript-quickly">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-typescript-quickly"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=typescript-quickly&ch=1" class="btn-primary-action" id="btn-start-typescript-quickly">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/typescript-quickly/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-typescript-quickly" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 16 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-typescript-quickly">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
       </div>
     </section>
 
@@ -1433,96 +1806,101 @@ body::before {
       </div>
     </section>
 
-    <!-- ========== SHELF 3: UPCOMING / PLANNED ========== -->
-    <section class="shelf-block" data-shelf="upcoming" id="shelf-section-upcoming">
+    <!-- ========== SHELF 5: TESTING & QA ========== -->
+    <section class="shelf-block" data-shelf="testing" id="shelf-section-testing">
       <div class="shelf-heading-row">
         <div class="shelf-title-wrap">
-          <div class="shelf-lang-icon future" aria-hidden="true">🌐</div>
+          <div class="shelf-lang-icon testing" aria-hidden="true">🧪</div>
           <div>
-            <h3>Полка: Web &amp; Перспективные языки</h3>
-            <span class="shelf-heading-desc">Запланированные интерактивные издания в очереди на адаптацию</span>
+            <h3>Полка: Тестирование, QA &amp; Архитектура API</h3>
+            <span class="shelf-heading-desc">Автоматизация проверок REST, контракты Pact, исследовательские эвристики, k6 и безопасность OWASP</span>
           </div>
         </div>
       </div>
 
       <div class="books-grid">
 
-        <div class="upcoming-card" data-search="разработка на javascript крис минник frontend архитектура">
-          <div>
-            <span class="upcoming-badge">Очередь #1 · JS</span>
-            <h4>Разработка на JavaScript</h4>
-            <p>Крис Минник, Ева Холланд · Современная веб-разработка, интерактивные интерфейсы, AJAX и практические приложения.</p>
+        <!-- Card: Testing Web APIs -->
+        <article class="book-tech-card card-testing-api" data-book-id="testing-web-api" data-search="тестирование веб-api марк винтерингем mark winteringham rest api postman newman openapi pact k6 owasp security">
+          <div class="card-top">
+            <a href="site/testing-web-api/" class="card-cover-link" title="Открыть оглавление">
+              <img src="site/assets/covers/testing_web_api.jpg" alt="Обложка Тестирование веб-API" class="card-cover-img" loading="lazy">
+            </a>
+            <div class="card-info">
+              <div class="badge-row">
+                <span class="lang-badge qa">🧪 Тестирование &amp; QA</span>
+                <span class="meta-edition">304 стр. · 2024</span>
+              </div>
+              <h4 class="book-card-title">
+                <a href="site/testing-web-api/">Тестирование веб-API</a>
+              </h4>
+              <p class="book-card-author">Марк Винтерингем</p>
+              <p class="book-card-desc">Полное практическое руководство: архитектура REST, контрактное тестирование с Pact, автоматизация в Postman/Newman, нагрузка k6 и безопасность по OWASP API Top 10.</p>
+              <div class="topics-list">
+                <span class="topic-tag">#APITesting</span>
+                <span class="topic-tag">#OpenAPI</span>
+                <span class="topic-tag">#Postman</span>
+                <span class="topic-tag">#PactContracts</span>
+                <span class="topic-tag">#k6Performance</span>
+                <span class="topic-tag">#OWASP</span>
+              </div>
+            </div>
           </div>
-          <div class="topics-list">
-            <span class="topic-tag">#WebDev</span>
-            <span class="topic-tag">#SPA</span>
-            <span class="topic-tag">#Frontend</span>
+
+          <!-- Progress Bar -->
+          <div class="card-progress-section" id="progress-block-testing-web-api">
+            <div class="progress-labels">
+              <span>Изучено: <b id="stat-count-testing-web-api">0 / 12 глав</b></span>
+              <span class="progress-percent" id="stat-pct-testing-web-api">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="fill-testing-web-api"></div>
+            </div>
+          </div>
+
+          <!-- Direct Actions -->
+          <div class="card-actions-row">
+            <a href="site/reader.html?book=testing-web-api&ch=1" class="btn-primary-action" id="btn-start-testing-web-api">
+              <span>🚀 Читать главу 1 →</span>
+            </a>
+            <a href="site/testing-web-api/#contents" class="btn-secondary-action" title="Оглавление книги">
+              <span>📖 Оглавление</span>
+            </a>
+          </div>
+
+          <!-- Quick Chapter Jump Accordion -->
+          <div class="quick-chapters-drawer">
+            <button type="button" class="drawer-toggle-btn" data-target="drawer-grid-testing-web-api" aria-expanded="false">
+              <span>⚡ Быстрый переход к любой из 12 глав</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="chapter-pills-grid" id="drawer-grid-testing-web-api">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== SHELF: UPCOMING / PLANNED ========== -->
+    <section class="shelf-block" data-shelf="upcoming" id="shelf-section-upcoming">
+      <div class="shelf-heading-row">
+        <div class="shelf-title-wrap">
+          <div class="shelf-lang-icon future" aria-hidden="true">🌐</div>
+          <div>
+            <h3>Полка: Перспективные издания</h3>
+            <span class="shelf-heading-desc">Статус очереди книг на адаптацию</span>
           </div>
         </div>
+      </div>
 
-        <div class="upcoming-card" data-search="эффективный typescript 62 способа улучшить код дэн вандеркам typing generics">
-          <div>
-            <span class="upcoming-badge">Очередь #5 · TS</span>
-            <h4>Эффективный TypeScript</h4>
-            <p>Дэн Вандеркам · 62 практических правила проектирования системы типов, вывод типов, дженерики и миграция с JS.</p>
-          </div>
-          <div class="topics-list">
-            <span class="topic-tag">#TypeScript</span>
-            <span class="topic-tag">#Generics</span>
-            <span class="topic-tag">#TypeSafety</span>
-          </div>
-        </div>
+      <div class="books-grid">
 
-        <div class="upcoming-card" data-search="профессиональный typescript борис черный масштабные приложения oop">
-          <div>
-            <span class="upcoming-badge">Очередь #6 · TS</span>
-            <h4>Профессиональный TypeScript</h4>
-            <p>Борис Черный · Разработка надежных масштабируемых корпоративных систем, продвинутые типы и шаблоны проектирования.</p>
-          </div>
-          <div class="topics-list">
-            <span class="topic-tag">#AdvancedTS</span>
-            <span class="topic-tag">#Enterprise</span>
-            <span class="topic-tag">#Architecture</span>
-          </div>
-        </div>
-
-        <div class="upcoming-card" data-search="typescript быстро яков файн антон моисеев web frontend">
-          <div>
-            <span class="upcoming-badge">Очередь #7 · TS</span>
-            <h4>TypeScript быстро</h4>
-            <p>Яков Файн, Антон Моисеев · Экспресс-курс по современному TypeScript, классам, интерфейсам и интеграции с фреймворками.</p>
-          </div>
-          <div class="topics-list">
-            <span class="topic-tag">#TSQuickly</span>
-            <span class="topic-tag">#Frontend</span>
-            <span class="topic-tag">#Patterns</span>
-          </div>
-        </div>
-
-        <div class="upcoming-card" data-search="total typescript matt pocock advanced type-level programming">
-          <div>
-            <span class="upcoming-badge">Очередь #8 · TS</span>
-            <h4>Total TypeScript</h4>
-            <p>Мэтт Покок · Бестселлер по программированию на уровне типов, условные типы, шаблонные литералы и внутренняя магия TS.</p>
-          </div>
-          <div class="topics-list">
-            <span class="topic-tag">#TypeLevel</span>
-            <span class="topic-tag">#TotalTS</span>
-            <span class="topic-tag">#Wizards</span>
-          </div>
-        </div>
-
-        <div class="upcoming-card" data-search="тестирование веб-api марк винтерингем rest api e2e mock postman">
-          <div>
-            <span class="upcoming-badge">Очередь #9 · QA</span>
-            <h4>Тестирование веб-API</h4>
-            <p>Марк Винтерингем · Полное практическое руководство: автоматизация, интеграционные проверки REST, мокирование и безопасность.</p>
-          </div>
-          <div class="topics-list">
-            <span class="topic-tag">#APITesting</span>
-            <span class="topic-tag">#Automation</span>
-            <span class="topic-tag">#REST</span>
-          </div>
+        <div class="upcoming-card done-card" style="grid-column: 1 / -1; text-align: center; padding: 36px 20px; border-style: dashed; border-color: rgba(52, 211, 153, 0.35);">
+          <div style="font-size: 32px; margin-bottom: 12px;">🎉</div>
+          <h4 style="font-size: 18px; margin-bottom: 8px; color: #34d399;">Все книги из очереди успешно адаптированы!</h4>
+          <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Все 13 изданий по Python, JavaScript, TypeScript, C++ и тестированию веб-API переведены в интерактивный формат с проверочными квизами.</p>
         </div>
 
       </div>
@@ -1535,7 +1913,7 @@ body::before {
     <div class="footer-left">
       <span>📚 <b>DevLibrary</b> — Интерактивная веб-библиотека для программистов</span>
       <span>•</span>
-      <span>141 глава с интерактивными квизами</span>
+      <span>230 глав с интерактивными квизами</span>
     </div>
     <div>
       <span>Удобные горячие клавиши: нажмите <code style="font-family:var(--font-mono);background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">/</code> для быстрого поиска</span>
@@ -1550,6 +1928,42 @@ body::before {
   'use strict';
 
   const BOOKS_CONFIG = [
+    {
+      id: 'testing-web-api',
+      title: 'Тестирование веб-API',
+      totalChapters: 12,
+      baseUrl: 'site/testing-web-api/'
+    },
+    {
+      id: 'typescript-quickly',
+      title: 'TypeScript быстро',
+      totalChapters: 16,
+      baseUrl: 'site/typescript-quickly/'
+    },
+    {
+      id: 'professional-typescript',
+      title: 'Профессиональный TypeScript',
+      totalChapters: 12,
+      baseUrl: 'site/professional-typescript/'
+    },
+    {
+      id: 'razrabotka-na-javascript',
+      title: 'Разработка на JavaScript',
+      totalChapters: 25,
+      baseUrl: 'site/razrabotka-na-javascript/'
+    },
+    {
+      id: 'effective-typescript',
+      title: 'Эффективный TypeScript',
+      totalChapters: 8,
+      baseUrl: 'site/effective-typescript/'
+    },
+    {
+      id: 'total-typescript',
+      title: 'Total TypeScript',
+      totalChapters: 16,
+      baseUrl: 'site/total-typescript/'
+    },
     {
       id: 'python-tdd',
       title: 'Python. Разработка на основе тестирования',

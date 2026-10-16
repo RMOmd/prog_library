@@ -1,0 +1,14 @@
+# Large archives and temporary files
+*.rar
+*.zip
+*.7z
+*.tar.gz
+*.iso
+*.dmg
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.agents/

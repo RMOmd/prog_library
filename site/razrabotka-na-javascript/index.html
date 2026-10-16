@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Разработка на JavaScript — Адам Д. Скотт</title>
+<meta name="description" content="Интерактивная книга: Разработка на JavaScript (JavaScript Everywhere) — Адам Д. Скотт. Построение кроссплатформенных приложений с помощью GraphQL, React, React Native и Electron.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f1704'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='38' fill='%23f59e0b'%3E🌐%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #161208;
+  --chalk: #fef3c7;
+  --top-bg: rgba(22, 18, 8, .92);
+  --top-line: #451a03;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(41, 29, 6, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 9999px;
+  color: #fbbf24;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: #f59e0b;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 198px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">type Query { notes: [Note!]! }</span>
+    <span style="right:8%;top:17%;--d:1.9">const [login] = useMutation(SIGNIN_USER);</span>
+    <span style="left:5%;bottom:20%;--d:2.2">new BrowserWindow({ width: 800, height: 600 });</span>
+    <span style="right:6%;bottom:15%;--d:2.5">&lt;NavigationContainer&gt;&lt;Tab.Navigator&gt;</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка Разработка на JavaScript" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка JavaScript / Fullstack</p>
+  <h1>Разработка <i>на</i> JavaScript</h1>
+  <p class="lede">Кроссплатформенный стек на практике: создание единого бэкенда на Node.js и GraphQL, современного веб-приложения на React, десктопного софта на Electron и мобильного клиента на React Native.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>Разработка <i>на</i> JavaScript</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'razrabotka-na-javascript',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Backend: Node.js, Express & GraphQL API', [
+      ['Среда разработки и базовый стек', 10],
+      ['Введение в архитектуру API: REST против GraphQL', 11],
+      ['Создание веб-приложения с помощью Node и Express', 12],
+      ['Наш первый GraphQL API: схемы, резолверы и мутации', 14],
+      ['База данных: интеграция MongoDB и Mongoose', 13]
+    ]],
+    ['Часть II. Операции, безопасность и развертывание API', [
+      ['Операции CRUD на базе GraphQL и базы данных', 13],
+      ['Учетные записи пользователей, хэширование паролей и JWT', 15],
+      ['Действия пользователя, вложенные резолверы и пагинация', 14],
+      ['Детали архитектуры: валидация, ограничения сложности и CORS', 12],
+      ['Развертывание API в облачную инфраструктуру', 12]
+    ]],
+    ['Часть III. Frontend: Веб-клиент на React & Apollo', [
+      ['Интерфейсы пользователей и философия React', 11],
+      ['Построение веб-клиента: роутинг и страницы', 13],
+      ['Стилевое оформление приложения с Styled Components', 12],
+      ['Интеграция Apollo Client: useQuery и useMutation', 14],
+      ['Аутентификация и глобальное состояние веб-клиента', 14],
+      ['Операции CRUD в пользовательском интерфейсе', 13],
+      ['Развертывание клиентского веб-приложения', 11]
+    ]],
+    ['Часть IV. Десктопные приложения на Electron', [
+      ['Создание десктопных приложений с помощью Electron', 12],
+      ['Интеграция веб-приложения и IPC в Electron', 13],
+      ['Сборка, подпись и дистрибуция Electron приложения', 11]
+    ]],
+    ['Часть V. Мобильные приложения на React Native & Expo', [
+      ['Мобильные приложения на React Native и платформа Expo', 13],
+      ['Оболочка мобильного приложения, табы и навигация', 14],
+      ['GraphQL запросы и списки в React Native', 13],
+      ['Аутентификация и SecureStore в мобильном приложении', 14],
+      ['Дистрибуция и публикация в App Store и Google Play', 12]
+    ]]
+  ],
+  hues: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899']
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Total TypeScript — Мэтт Покок</title>
+<meta name="description" content="Интерактивная книга: Total TypeScript от Мэтта Покока — программирование на уровне типов, дженерики, условные типы и суперсилы компилятора">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a8a'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='38' fill='%2360a5fa'%3ETS%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #081120;
+  --chalk: #f1f5f9;
+  --top-bg: rgba(8, 17, 32, .92);
+  --top-line: #1e3a8a;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 9999px;
+  color: #60a5fa;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 182px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">type DeepReadonly&lt;T&gt; = ...</span>
+    <span style="right:8%;top:17%;--d:1.9">T extends U ? X : Y</span>
+    <span style="left:5%;bottom:20%;--d:2.2">const x = { ... } as const</span>
+    <span style="right:6%;bottom:15%;--d:2.5">config satisfies AppConfig</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка книги Total TypeScript" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка TypeScript</p>
+  <h1>Total <i>&amp;</i> TypeScript</h1>
+  <p class="lede">Исчерпывающее практическое руководство от Мэтта Покока: от автодополнения в IDE и базовых типов до дженериков, условных типов и архитектуры продвинутых утилит.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>Total <i>&amp;</i> TypeScript</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'total-typescript',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Быстрый старт и суперсилы IDE', [
+      ['Настройка рабочего окружения и архитектура TypeScript', 10],
+      ['Суперсилы IDE: автодополнение, навигация и диагностика', 12],
+      ['TypeScript в пайплайне разработки и транспиляция', 11]
+    ]],
+    ['Часть II. Фундаментальные основы типов и сужение', [
+      ['Базовые типы, аннотации и типизация функций', 14],
+      ['Объединения (Unions), литералы и техники сужения типов', 15]
+    ]],
+    ['Часть III. Объекты, классы и мутабельность', [
+      ['Работа с объектами, динамические ключи и утилиты', 14],
+      ['Мутабельность, вывод типов и глубокая неизменяемость с as const', 12],
+      ['Классы: свойства, методы и наследование в TS', 13],
+      ['Эксклюзивные фичи TypeScript: Enums, Namespaces и стираемый синтаксис', 11]
+    ]],
+    ['Часть IV. Работа с компилятором и вывод производных типов', [
+      ['Вывод типов: typeof, индексированный доступ и ReturnType', 15],
+      ['Аннотации, утверждения (as), satisfies и директивы подавления', 14],
+      ['Странные и неочевидные места TypeScript', 16]
+    ]],
+    ['Часть V. Окружение, модули и конфигурация', [
+      ['Модули, скрипты и файлы деклараций (.d.ts)', 14],
+      ['Тонкая настройка компилятора: tsconfig.json без тайн', 13]
+    ]],
+    ['Часть VI. Продвинутая разработка и Type-Level утилиты', [
+      ['Проектирование типов: дженерики, шаблонные литералы и сопоставления', 18],
+      ['Создание мощных общих утилит: предикаты, assert-функции и перегрузки', 17]
+    ]]
+  ],
+  hues: ['#3b82f6', '#60a5fa', '#818cf8', '#a855f7', '#38bdf8', '#2563eb']
+});
+</script>
+</body>
+</html>

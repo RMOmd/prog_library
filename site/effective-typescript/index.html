@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Эффективный TypeScript: 62 способа улучшить код — Дэн Вандеркам</title>
+<meta name="description" content="Интерактивная книга: Эффективный TypeScript (62 способа улучшить код) — Дэн Вандеркам. Практические правила проектирования типов, вывод типов, безопасный any и миграция.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a8a'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='38' fill='%2338bdf8'%3E🎯%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../lib/units.css">
+<link rel="stylesheet" href="../lib/contents.css">
+<script src="../lib/units.js"></script>
+<script src="../lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+:root {
+  --board: #081120;
+  --chalk: #f1f5f9;
+  --top-bg: rgba(8, 17, 32, .92);
+  --top-line: #1e3a8a;
+  color-scheme: dark;
+}
+.library-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 10;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 9999px;
+  color: #38bdf8;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.library-back-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  transform: translateX(-3px);
+}
+.cover-img-preview {
+  width: 140px;
+  height: 198px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+<a href="../../" class="library-back-btn" id="back-to-library-btn">← В каталог библиотеки</a>
+
+<section id="cover">
+  <div class="chalk" aria-hidden="true">
+    <span style="left:7%;top:13%;--d:1.6">Types as sets of values</span>
+    <span style="right:8%;top:17%;--d:1.9">Never model invalid states</span>
+    <span style="left:5%;bottom:20%;--d:2.2">Liberal in accept, strict in return</span>
+    <span style="right:6%;bottom:15%;--d:2.5">Migrate bottom-up via AST graph</span>
+  </div>
+  <img src="img/cover.jpg" alt="Обложка Эффективный TypeScript" class="cover-img-preview">
+  <p class="kicker">Интерактивная книга · Полка TypeScript</p>
+  <h1>Эффективный <i>&amp;</i> TypeScript</h1>
+  <p class="lede">62 фундаментальных правила от Дэна Вандеркама: проектирование строгих типов, безопасное управление any, устранение дублирования и пошаговая миграция больших кодовых баз.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Оглавление книги<svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Назад к обложке" data-t-label="toCover">
+      <strong>Эффективный <i>&amp;</i> TypeScript</strong>
+    </a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+</main>
+
+<script>
+Contents.book({
+  bookId: 'effective-typescript',
+  start: { unit: 1, chapter: 1 },
+  units: [
+    ['Часть I. Философия и система типов (Правила 1–18)', [
+      ['Знакомство с TypeScript: фундамент и ловушки (Правила 1–5)', 12],
+      ['Система типов в действии: типы как множества значений (Правила 6–18)', 16]
+    ]],
+    ['Часть II. Вывод и проектирование типов (Правила 19–37)', [
+      ['Вывод типов и техники сужения (Правила 19–27)', 15],
+      ['Архитектура и проектирование типов: недопустимые состояния недопустимы (Правила 28–37)', 17]
+    ]],
+    ['Часть III. Any, декларации и рантайм (Правила 38–57)', [
+      ['Эффективное и безопасное применение any (Правила 38–44)', 14],
+      ['Декларации типов и экосистема @types (Правила 45–52)', 15],
+      ['Написание и выполнение кода: ловушки рантайма (Правила 53–57)', 13]
+    ]],
+    ['Часть IV. Миграция кодовой базы (Правила 58–62)', [
+      ['Стратегия переноса проектов на TypeScript (Правила 58–62)', 14]
+    ]]
+  ],
+  hues: ['#2563eb', '#38bdf8', '#0284c7', '#0d9488']
+});
+</script>
+</body>
+</html>
