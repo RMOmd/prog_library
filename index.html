@@ -130,6 +130,7 @@ body::before {
   letter-spacing: -0.02em;
   background: linear-gradient(120deg, #ffffff 40%, #94a3b8);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
@@ -356,7 +357,10 @@ body::before {
 }
 
 .shelf-lang-icon.py { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); }
+.shelf-lang-icon.js { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); }
+.shelf-lang-icon.ts { background: rgba(49, 120, 198, 0.15); border: 1px solid rgba(49, 120, 198, 0.35); }
 .shelf-lang-icon.cpp { background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); }
+.shelf-lang-icon.testing { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); }
 .shelf-lang-icon.future { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); }
 
 .shelf-heading-row h3 {
@@ -401,147 +405,75 @@ body::before {
 .book-tech-card:hover {
   transform: translateY(-4px);
   background: var(--bg-card-hover);
-  border-color: var(--card-accent-border, var(--border-card-hover));
-  box-shadow: var(--card-glow, var(--shadow-md));
+  border-color: var(--shelf-accent-border, var(--border-card-hover));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55), 0 0 30px var(--shelf-accent-glow, rgba(56, 189, 248, 0.2));
 }
 
-.book-tech-card.card-py-tdd {
-  --card-accent-border: rgba(56, 189, 248, 0.45);
-  --card-glow: var(--shadow-glow-blue);
+/* ==================== SHELF DESIGN SYSTEM ==================== */
+/* 1. Python Shelf */
+.shelf-block[data-shelf="python"] {
+  --shelf-accent: #38bdf8;
+  --shelf-accent-glow: rgba(56, 189, 248, 0.25);
+  --shelf-accent-border: rgba(56, 189, 248, 0.45);
+  --shelf-btn-bg: #38bdf8;
+  --shelf-btn-text: #04121d;
+  --shelf-btn-hover: #7dd3fc;
+  --shelf-btn-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+  --shelf-btn-shadow-hover: 0 6px 20px rgba(56, 189, 248, 0.5);
+  --shelf-fill: linear-gradient(90deg, #0284c7, #38bdf8);
 }
 
-.book-tech-card.card-clean-code {
-  --card-accent-border: rgba(16, 185, 129, 0.45);
-  --card-glow: var(--shadow-glow-green);
+/* 2. JavaScript Shelf */
+.shelf-block[data-shelf="javascript"] {
+  --shelf-accent: #f59e0b;
+  --shelf-accent-glow: rgba(245, 158, 11, 0.25);
+  --shelf-accent-border: rgba(245, 158, 11, 0.45);
+  --shelf-btn-bg: #f59e0b;
+  --shelf-btn-text: #18181b;
+  --shelf-btn-hover: #fbbf24;
+  --shelf-btn-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  --shelf-btn-shadow-hover: 0 6px 20px rgba(245, 158, 11, 0.5);
+  --shelf-fill: linear-gradient(90deg, #f59e0b, #fbbf24);
 }
 
-.book-tech-card.card-cpp {
-  --card-accent-border: rgba(250, 204, 21, 0.45);
-  --card-glow: var(--shadow-glow-amber);
+/* 3. TypeScript Shelf */
+.shelf-block[data-shelf="typescript"] {
+  --shelf-accent: #3178c6;
+  --shelf-accent-glow: rgba(49, 120, 198, 0.25);
+  --shelf-accent-border: rgba(49, 120, 198, 0.45);
+  --shelf-btn-bg: #3178c6;
+  --shelf-btn-text: #ffffff;
+  --shelf-btn-hover: #4d93e8;
+  --shelf-btn-shadow: 0 4px 14px rgba(49, 120, 198, 0.35);
+  --shelf-btn-shadow-hover: 0 6px 20px rgba(49, 120, 198, 0.5);
+  --shelf-fill: linear-gradient(90deg, #2563eb, #60a5fa);
 }
 
-.book-tech-card.card-js-guide {
-  --card-accent-border: rgba(250, 204, 21, 0.45);
-  --card-glow: var(--shadow-glow-amber);
+/* 4. C / C++ Shelf */
+.shelf-block[data-shelf="cpp"] {
+  --shelf-accent: #facc15;
+  --shelf-accent-glow: rgba(250, 204, 21, 0.25);
+  --shelf-accent-border: rgba(250, 204, 21, 0.45);
+  --shelf-btn-bg: #facc15;
+  --shelf-btn-text: #231900;
+  --shelf-btn-hover: #fde047;
+  --shelf-btn-shadow: 0 4px 14px rgba(250, 204, 21, 0.35);
+  --shelf-btn-shadow-hover: 0 6px 20px rgba(250, 204, 21, 0.5);
+  --shelf-fill: linear-gradient(90deg, #facc15, #f59e0b);
 }
 
-.shelf-lang-icon.js { background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.35); }
-.lang-badge.js { background: rgba(250, 204, 21, 0.15); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); }
-
-.card-js-guide .btn-primary-action {
-  background: #facc15;
-  color: #18181b;
-  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
+/* 5. Testing & QA Shelf */
+.shelf-block[data-shelf="testing"] {
+  --shelf-accent: #a855f7;
+  --shelf-accent-glow: rgba(168, 85, 247, 0.25);
+  --shelf-accent-border: rgba(168, 85, 247, 0.45);
+  --shelf-btn-bg: #a855f7;
+  --shelf-btn-text: #ffffff;
+  --shelf-btn-hover: #c084fc;
+  --shelf-btn-shadow: 0 4px 14px rgba(168, 85, 247, 0.35);
+  --shelf-btn-shadow-hover: 0 6px 20px rgba(168, 85, 247, 0.5);
+  --shelf-fill: linear-gradient(90deg, #9333ea, #c084fc);
 }
-.card-js-guide .btn-primary-action:hover {
-  background: #fde047;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.45);
-}
-.card-js-guide .progress-fill { background: linear-gradient(90deg, #facc15, #f59e0b); }
-
-.book-tech-card.card-js-everywhere {
-  --card-accent-border: rgba(245, 158, 11, 0.45);
-  --card-glow: var(--shadow-glow-amber);
-}
-.card-js-everywhere .btn-primary-action {
-  background: #f59e0b;
-  color: #18181b;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
-}
-.card-js-everywhere .btn-primary-action:hover {
-  background: #fbbf24;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-}
-.card-js-everywhere .progress-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-
-.book-tech-card.card-total-ts {
-  --card-accent-border: rgba(59, 130, 246, 0.45);
-  --card-glow: 0 0 30px rgba(59, 130, 246, 0.22);
-}
-.shelf-lang-icon.ts { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); }
-.lang-badge.ts { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-.card-total-ts .btn-primary-action {
-  background: #3b82f6;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
-}
-.card-total-ts .btn-primary-action:hover {
-  background: #60a5fa;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-}
-.card-total-ts .progress-fill { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
-
-.book-tech-card.card-effective-ts {
-  --card-accent-border: rgba(56, 189, 248, 0.45);
-  --card-glow: 0 0 30px rgba(56, 189, 248, 0.22);
-}
-.card-effective-ts .btn-primary-action {
-  background: #0284c7;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-}
-.card-effective-ts .btn-primary-action:hover {
-  background: #38bdf8;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
-}
-.card-effective-ts .progress-fill { background: linear-gradient(90deg, #0284c7, #38bdf8); }
-
-.book-tech-card.card-pro-ts {
-  --card-accent-border: rgba(99, 102, 241, 0.45);
-  --card-glow: 0 0 30px rgba(99, 102, 241, 0.22);
-}
-.card-pro-ts .btn-primary-action {
-  background: #6366f1;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
-}
-.card-pro-ts .btn-primary-action:hover {
-  background: #818cf8;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-  color: #ffffff;
-}
-.card-pro-ts .progress-fill { background: linear-gradient(90deg, #6366f1, #818cf8); }
-
-.book-tech-card.card-ts-quickly {
-  --card-accent-border: rgba(37, 99, 235, 0.45);
-  --card-glow: 0 0 30px rgba(37, 99, 235, 0.22);
-}
-.card-ts-quickly .btn-primary-action {
-  background: #2563eb;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-}
-.card-ts-quickly .btn-primary-action:hover {
-  background: #3b82f6;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
-  color: #ffffff;
-}
-.card-ts-quickly .progress-fill { background: linear-gradient(90deg, #2563eb, #60a5fa); }
-
-.shelf-lang-icon.testing { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); }
-.lang-badge.qa { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
-.book-tech-card.card-testing-api {
-  --card-accent-border: rgba(168, 85, 247, 0.45);
-  --card-glow: 0 0 30px rgba(168, 85, 247, 0.22);
-}
-.card-testing-api .btn-primary-action {
-  background: #a855f7;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.35);
-}
-.card-testing-api .btn-primary-action:hover {
-  background: #c084fc;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
-  color: #ffffff;
-}
-.card-testing-api .progress-fill { background: linear-gradient(90deg, #a855f7, #c084fc); }
 
 
 
@@ -603,6 +535,8 @@ body::before {
 .lang-badge.clean { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
 .lang-badge.cpp { background: rgba(250, 204, 21, 0.15); color: var(--accent-amber); border: 1px solid rgba(250, 204, 21, 0.3); }
 .lang-badge.js { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.lang-badge.ts { background: rgba(49, 120, 198, 0.15); color: #60a5fa; border: 1px solid rgba(49, 120, 198, 0.3); }
+.lang-badge.qa { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
 
 .meta-edition {
   font-size: 12px;
@@ -638,6 +572,7 @@ body::before {
   margin-top: 2px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -699,11 +634,8 @@ body::before {
   width: 0%;
   border-radius: var(--radius-full);
   transition: width 0.4s ease;
+  background: var(--shelf-fill, linear-gradient(90deg, #3b82f6, #60a5fa));
 }
-
-.card-py-tdd .progress-fill { background: linear-gradient(90deg, #38bdf8, #60a5fa); }
-.card-clean-code .progress-fill { background: linear-gradient(90deg, #10b981, #34d399); }
-.card-cpp .progress-fill { background: linear-gradient(90deg, #facc15, #fbbf24); }
 
 /* ==================== DIRECT ACTION BUTTONS ==================== */
 .card-actions-row {
@@ -726,75 +658,20 @@ body::before {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
-  background: #3b82f6;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+  background: var(--shelf-btn-bg, #3b82f6);
+  color: var(--shelf-btn-text, #ffffff);
+  box-shadow: var(--shelf-btn-shadow, 0 4px 14px rgba(59, 130, 246, 0.35));
 }
 
 .btn-primary-action:visited {
-  color: inherit;
+  color: var(--shelf-btn-text, #ffffff);
 }
 
 .btn-primary-action:hover {
-  background: #60a5fa;
-  color: #ffffff;
+  background: var(--shelf-btn-hover, #60a5fa);
+  color: var(--shelf-btn-text, #ffffff);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-}
-
-.card-py-tdd .btn-primary-action {
-  background: #38bdf8;
-  color: #04121d;
-  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
-}
-.card-py-tdd .btn-primary-action:hover {
-  background: #7dd3fc;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45);
-}
-
-.card-clean-code .btn-primary-action {
-  background: #10b981;
-  color: #022013;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-}
-.card-clean-code .btn-primary-action:hover {
-  background: #34d399;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
-}
-
-.card-cpp .btn-primary-action {
-  background: #facc15;
-  color: #231900;
-  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
-}
-.card-cpp .btn-primary-action:hover {
-  background: #fde047;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.45);
-}
-
-.card-ydkjs .btn-primary-action, .card-js-guide .btn-primary-action {
-  background: #f59e0b;
-  color: #1c1100;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
-}
-.card-ydkjs .btn-primary-action:hover, .card-js-guide .btn-primary-action:hover {
-  background: #fbbf24;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
-}
-
-.card-js-nulya .btn-primary-action {
-  background: #10b981;
-  color: #022013;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-}
-.card-js-nulya .btn-primary-action:hover {
-  background: #34d399;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+  box-shadow: var(--shelf-btn-shadow-hover, 0 6px 20px rgba(59, 130, 246, 0.5));
 }
 
 .btn-secondary-action {
